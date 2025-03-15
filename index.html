@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Mode Selection -->
+    <div class="mode-buttons">
+        <button data-mode="pomodoro" class="selected">Pomodoro</button>
+        <button data-mode="short-break">Short Break</button>
+        <button data-mode="long-break">Long Break</button>
+    </div>
+    
+    <!-- Timer Display -->
+    <div class="timer">25:00</div>
+
+    <!-- Control Buttons -->
+    <div class="control-buttons">
+        <button>Start</button>
+        <button>🔄</button>
+        <button>❌</button>
+    </div>
+
+    <script>
+        // Simple close function for Electron
+        document.querySelector('.control-buttons button:nth-child(3)').addEventListener('click', function() {
+            if (window.electron) {
+                window.electron.close();
+            } else {
+                console.log('Close button clicked, but electron is not available');
+            }
+        });
+    </script>
+    
+    <script>
+        // The timer script (placed inline for direct integration)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Timer configuration
+            const timerConfig = {
+                'pomodoro': 25 * 60, // 25 minutes in seconds
+                'short-break': 5 * 60, // 5 minutes in seconds
+                'long-break': 15 * 60 // 15 minutes in seconds
+            };
+
+            // DOM Elements
+            const timerDisplay = document.querySelector('.timer');
+            const modeButtons = document.querySelectorAll('.mode-buttons button');
+            const startButton = document.querySelector('.control-buttons button:nth-child(1)');
+            const resetButton = document.querySelector('.control-buttons button:nth-child(2)');
+
+            // State variables
+            let currentMode = 'pomodoro';
+            let timeRemaining = timerConfig[currentMode];
+            let isRunning = false;
+            let timerInterval;
+
+            // Initialize the timer display
+            updateTimerDisplay();
+
+            // Mode button event listeners
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const mode = this.getAttribute('data-mode');
+                    switchMode(mode);
+                    
+                    // Update selected button UI
+                    modeButtons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Start/Pause button
+            startButton.addEventListener('click', function() {
+                if (isRunning) {
+                    pauseTimer();
+                    this.textContent = 'Start';
+                } else {
+                    startTimer();
+                    this.textContent = 'Pause';
+                }
+            });
+
+            // Reset button
+            resetButton.addEventListener('click', function() {
+                resetTimer();
+            });
+
+            // Switch between modes
+            function switchMode(mode) {
+                currentMode = mode;
+                timeRemaining = timerConfig[mode];
+                updateTimerDisplay();
+                
+                // If timer is running, reset it
+                if (isRunning) {
+                    pauseTimer();
+                    startButton.textContent = 'Start';
+                }
+            }
+
+            // Update the timer display
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            // Start the timer
+            function startTimer() {
+                if (isRunning) return;
+                
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    
+                    if (timeRemaining <= 0) {
+                        completeTimer();
+                    } else {
+                        updateTimerDisplay();
+                    }
+                }, 1000);
+            }
+
+            // Pause the timer
+            function pauseTimer() {
+                clearInterval(timerInterval);
+                isRunning = false;
+            }
+
+            // Reset the timer
+            function resetTimer() {
+                pauseTimer();
+                timeRemaining = timerConfig[currentMode];
+                updateTimerDisplay();
+                startButton.textContent = 'Start';
+            }
+function completeTimer() {
+    pauseTimer();
+    timeRemaining = 0;
+    updateTimerDisplay();
+    startButton.textContent = 'Start';
+    
+    // Play completion sound three times
+    playThreeBeeps();
+}
+
+// Add this new function to handle the three beeps
+function playThreeBeeps() {
+    const beepDuration = 300; // Each beep is 300ms
+    const pauseDuration = 200; // 200ms pause between beeps
+    
+    // Play first beep
+    playBeep(beepDuration);
+    
+    // Play second beep after delay
+    setTimeout(() => {
+        playBeep(beepDuration);
+        
+        // Play third beep after another delay
+        setTimeout(() => {
+            playBeep(beepDuration);
+        }, beepDuration + pauseDuration);
+        
+    }, beepDuration + pauseDuration);
+}
+
+// Function to play a single beep
+function playBeep(duration) {
+    // Create an audio context
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContext();
+    
+    // Create an oscillator for the sound
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    // Connect the oscillator to the gain node and the gain node to the destination
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    // Set the oscillator type and frequency
+    oscillator.type = 'sine'; // Sine wave for a pleasant tone
+    oscillator.frequency.value = 800; // Frequency in Hz
+    
+    // Set the gain (volume) - keep it moderate
+    gainNode.gain.value = 0.2;
+    
+    // Start the oscillator
+    oscillator.start();
+    
+    // Stop the oscillator after the specified duration
+    setTimeout(() => {
+        oscillator.stop();
+        audioContext.close();
+    }, duration);
+}
+        });
+    </script>
+</body>
+</html>

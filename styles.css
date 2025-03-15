@@ -1,0 +1,98 @@
+body {
+    opacity: 0.5;
+    background: rgba(0, 0, 0, 0); /* Fully transparent */
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    -webkit-app-region: drag; /* Makes it draggable */
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px; /* Reduce gap below mode buttons */
+}
+
+.mode-buttons button,
+.buttons button {
+    font-size: 17px;
+    padding: 10px 20px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    -webkit-app-region: no-drag; /* Buttons should remain interactive */
+}
+
+.mode-buttons button:hover,
+.buttons button:hover {
+    background: dodgerblue;
+    color: white;
+    border-color: dodgerblue;
+    text-shadow: 0 0 5px white;
+    box-shadow: 0 0 10px dodgerblue;
+}
+
+.mode-buttons button:active,
+.buttons button:active {
+    transform: translateY(2px);
+}
+
+.timer {
+    font-size: 10rem; /* Adjusted text size */
+    font-weight: bold;
+    line-height: 1;
+    margin: 10px 0;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px; /* Reduce gap below mode buttons */
+}
+
+.control-buttons button,
+.buttons button {
+    font-size: 17px;
+    padding: 10px 40px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    -webkit-app-region: no-drag; /* Buttons should remain interactive */
+}
+
+.control-buttons button:hover,
+.buttons button:hover {
+    background: dodgerblue;
+    color: white;
+    border-color: dodgerblue;
+    text-shadow: 0 0 5px white;
+    box-shadow: 0 0 10px dodgerblue;
+}
+
+.control-buttons button:active,
+.buttons button:active {
+    transform: translateY(2px);
+}
+.mode-buttons button.selected {
+    background: dodgerblue;
+    color: white;
+    border-color: dodgerblue;
+    text-shadow: 0 0 5px white;
+    box-shadow: 0 0 10px dodgerblue;
+}
+/* Add these lines to your styles.css file */
+
+.mode-buttons, .control-buttons {
+    transition: opacity 0.3s ease;
+}

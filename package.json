@@ -1,0 +1,29 @@
+{
+  "name": "pomodoro-by-rohan",
+  "version": "1.0.0",
+  "description": "A transparent floating timer application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "keywords": [],
+  "author": "Rohan",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^35.0.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.pomodorobyrohan.timer",
+    "productName": "Pomodoro by Rohan",
+    "asar": true,
+    "files": [
+      "!node_modules/electron"
+    ],
+    "win": {
+      "target": "portable",
+      "artifactName": "${productName}-setup.exe"
+    }
+  }
+}
