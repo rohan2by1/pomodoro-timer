@@ -1,81 +1,92 @@
-Pomodoro Timer by Rohan
+
+# Pomodoro Timer by Rohan
 
 A transparent floating Pomodoro timer built with Electron. The timer supports Pomodoro, short break, and long break modes, and provides an interactive UI that can be toggled on and off.
 
-Features
 
-Transparent always-on-top floating window
+## Features
 
-Pomodoro, short break, and long break modes
+- Transparent always-on-top floating window
 
-Start, pause, and reset functionality
+- Pomodoro, short break, and long break modes
 
-Interactive UI that can be toggled
+- Start, pause, and reset functionality
 
-Plays three beeps when the timer ends
+- Interactive UI that can be toggled
 
-Customizable settings
+- Plays three beeps when the timer ends
 
-Supports Windows
+- Customizable settings
 
-Tech Stack
+- Supports Windows
 
-Electron - For building the desktop application
 
-HTML, CSS, JavaScript - For frontend UI
+## Tech Stack
 
-Tailwind CSS - For styling
+**Electron :** - For building the desktop application
 
-Node.js - For managing dependencies and running the Electron app
+**HTML, CSS, JavaScript:** - For frontend UI
 
-Installation
+**Tailwind CSS :** - For styling
 
-Prerequisites
+**Node.js :** - For managing dependencies and running the Electron app
 
-Ensure you have Node.js installed.
 
-Clone the Repository
 
-git clone https://github.com/yourusername/pomodoro-timer.git
-cd pomodoro-timer
+## Installation
+### Prerequisites
+Ensure you have [Node.js](https://nodejs.org/en) installed. 
 
-Install Dependencies
 
-npm install
+Clone the project
 
-Run the Application
 
-npm start
+```bash
+  git clone https://github.com/rohan2by1/pomodoro-timer.git
+```
 
-Build the Application
+Go to the project directory
 
-To create a Windows portable executable:
+```bash
+  cd my-project
+```
 
-npm run build
+Install dependencies
 
-Usage
+```bash
+  npm install
+```
 
-Press F9 to toggle interactivity.
+Start the server
 
-Click the Start button to begin the timer.
+```bash
+  npm start
+```
 
-Click 🔄 to reset the timer.
 
-Click ❌ to close the application.
+## Usage
 
-File Structure
+- Press F9 to toggle interactivity.
 
+- Click the Start button to begin the timer.
+
+- Click 🔄 to reset the timer.
+
+- Click ❌ to close the application.
+
+## File Structure
+
+```
 ├── index.html        # UI layout
 ├── main.js           # Electron main process
 ├── preload.js        # Secure IPC communication
 ├── styles.css        # Styling for UI
 ├── package.json      # Project metadata and scripts
 ├── package-lock.json # Dependency lock file
+```
 
-Author
 
-Created by Rohan
+## Authors
 
-License
+- Created by Rohan [@rohan2by1](https://www.github.com/rohan2by1)
 
-This project is licensed under the ISC License.
